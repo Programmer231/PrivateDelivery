@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import Navbar from "../../components/navbar";
 import { api } from "../utils/api";
 
-const createOrder: NextPage = () => {
+const CreateOrder: NextPage = () => {
   const uploadOrder = api.order.uploadOrder.useMutation();
   const { data: session, status: isLoading } = useSession();
   const router = useRouter();
@@ -246,4 +246,4 @@ const createOrder: NextPage = () => {
   );
 };
 
-export default createOrder;
+export default CreateOrder;
