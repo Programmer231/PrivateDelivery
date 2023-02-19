@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "DeliveryOrder" ALTER COLUMN "userId" DROP NOT NULL,
+ALTER COLUMN "driverId" DROP NOT NULL;

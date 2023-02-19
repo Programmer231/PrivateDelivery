@@ -14,12 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -56,14 +50,26 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    driver        DeliveryDriver?
+    order         DeliveryOrder[] @relation(name: "UserTracker", map: "User_fkey")
+    driver        DeliveryOrder[] @relation(name: "DriverTracker", map: "Driver_fkey")
     status        String?
 }
 
-model DeliveryDriver {
+model DeliveryOrder {
+    price         Float
+    personalAddress       String
+    items         String[]
+    personalLatitude      Float
+    personalLongitude     Float
+    pickupLatitude      Float
+    pickupLongitude     Float
+    pickupAddress   String
+    timeframe     String
     id            String    @id @default(cuid())
-    User          User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId        String @unique
+    User          User? @relation(name: "UserTracker", fields: [userId], references: [id], onDelete: Cascade)
+    userId        String?
+    Driver        User? @relation(name: "DriverTracker", fields: [driverId], references: [id], onDelete: Cascade)
+    driverId      String?
 }
 
 model VerificationToken {

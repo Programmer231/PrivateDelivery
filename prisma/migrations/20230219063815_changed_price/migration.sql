@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DeliveryOrder" ALTER COLUMN "price" SET DATA TYPE DOUBLE PRECISION;
