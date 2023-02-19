@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { api } from "../utils/api";
 
-export default function subscribe() {
+export default function Subscribe() {
   const router = useRouter();
   const { data: session } = useSession();
   const subscribeFunction = api.auth.subscribeToDelivery.useMutation();
