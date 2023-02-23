@@ -105,8 +105,8 @@ const Navbar: React.FC<{}> = (props) => {
                   color: "black",
                   fontSize: 30,
                 }}
-                onClick={async () => {
-                  await signOut();
+                onClick={() => {
+                  signOut();
                 }}
               >
                 Logout
@@ -122,8 +122,8 @@ const Navbar: React.FC<{}> = (props) => {
                 color: "black",
                 fontSize: 30,
               }}
-              onClick={async () => {
-                await signIn();
+              onClick={() => {
+                signIn();
               }}
             >
               Login
