@@ -1,9 +1,10 @@
+import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { api } from "../utils/api";
 
-export default function Subscribe() {
+const Subscribe: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const subscribeFunction = api.auth.subscribeToDelivery.useMutation();
@@ -34,4 +35,6 @@ export default function Subscribe() {
       </button>
     </div>
   );
-}
+};
+
+export default Subscribe;
