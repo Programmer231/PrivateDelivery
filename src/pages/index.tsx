@@ -68,7 +68,7 @@ const Home: NextPage = () => {
                     Items:{" "}
                     <Stack flexDirection="row" gap="10px">
                       {data.items.map((item, index) => {
-                        return <h2>{item}</h2>;
+                        return <h2 key={index}>{item}</h2>;
                       })}
                     </Stack>
                   </h2>
@@ -137,7 +137,7 @@ const Home: NextPage = () => {
                     Items:{" "}
                     <Stack flexDirection="row" gap="10px">
                       {data.items.map((item, index) => {
-                        return <h2>{item}</h2>;
+                        return <h2 key={index}>{item}</h2>;
                       })}
                     </Stack>
                   </h2>

@@ -12,7 +12,7 @@ export default function Subscribe() {
     if (subscribeFunction.isSuccess) {
       router.push("/");
     }
-  }, [subscribeFunction.isSuccess]);
+  }, [subscribeFunction.isSuccess, router]);
 
   const subscriptionHandler = () => {
     console.log(session?.user.id);

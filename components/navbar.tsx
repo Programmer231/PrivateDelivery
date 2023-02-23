@@ -56,7 +56,7 @@ const Navbar: React.FC<{}> = (props) => {
                   color: "black",
                   fontSize: 30,
                 }}
-                href="/subscribe"
+                href="/Subscribe"
               >
                 Become a Delivery Driver
               </Link>
@@ -73,7 +73,7 @@ const Navbar: React.FC<{}> = (props) => {
                   color: "black",
                   fontSize: 30,
                 }}
-                href="/createOrder"
+                href="/CreateOrder"
               >
                 Create an Order
               </Link>
@@ -105,8 +105,8 @@ const Navbar: React.FC<{}> = (props) => {
                   color: "black",
                   fontSize: 30,
                 }}
-                onClick={() => {
-                  signOut();
+                onClick={async () => {
+                  await signOut();
                 }}
               >
                 Logout
@@ -122,8 +122,8 @@ const Navbar: React.FC<{}> = (props) => {
                 color: "black",
                 fontSize: 30,
               }}
-              onClick={() => {
-                signIn();
+              onClick={async () => {
+                await signIn();
               }}
             >
               Login

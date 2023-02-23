@@ -9,22 +9,25 @@ import { useRouter } from "next/router";
 const PickupOrders: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const getDeliveries = api.order.getAllOrders.useQuery();
   const driveOrder = api.order.driveForOrder.useMutation();
   const getSpecificUser = api.auth.getSpecificUser.useQuery(
     session?.user.id || " "
   );
+  const getDeliveries = api.order.getAllOrders.useQuery();
+
+  useEffect(() => {
+    getDeliveries.refetch();
+  }, [driveOrder.isLoading]);
 
   const handleClick = (id: string) => {
     driveOrder.mutate({ orderId: id, userId: session?.user.id || " " });
-    getDeliveries.refetch();
   };
 
   useEffect(() => {
     if (getSpecificUser?.data?.status !== "driver") {
       router.replace("/");
     }
-  }, [getSpecificUser.isLoading]);
+  }, [getSpecificUser.isLoading, getSpecificUser?.data?.status, router]);
   return (
     <div>
       <Navbar></Navbar>
@@ -60,14 +63,14 @@ const PickupOrders: NextPage = () => {
                 Items:{" "}
                 <Stack flexDirection="row" gap="10px">
                   {data.items.map((item, index) => {
-                    return <h2>{item}</h2>;
+                    return <h2 key={"index"}>{item}</h2>;
                   })}
                 </Stack>
               </h2>
               {data.Driver === null &&
-              !getDeliveries.isLoading &&
               !driveOrder.isLoading &&
-              !driveOrder.isSuccess &&
+              !getDeliveries.isLoading &&
+              getDeliveries.isSuccess &&
               data.userId !== session?.user.id ? (
                 <Button
                   onClick={() => {
