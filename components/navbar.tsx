@@ -123,7 +123,11 @@ const Navbar: React.FC<{}> = (props) => {
                 fontSize: 30,
               }}
               onClick={() => {
-                signIn();
+                try {
+                  signIn();
+                } catch (err) {
+                  console.log(err);
+                }
               }}
             >
               Login
