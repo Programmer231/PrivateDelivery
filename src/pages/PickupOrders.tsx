@@ -67,7 +67,9 @@ const PickupOrders: NextPage = () => {
                   })}
                 </Stack>
               </h2>
-              {data.Driver === null && data.userId !== session?.user.id ? (
+              {data.Driver === null &&
+              data.userId !== session?.user.id &&
+              !getDeliveries.isLoading ? (
                 <Button
                   onClick={() => {
                     handleClick(data.id || " ");
