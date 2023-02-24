@@ -7,17 +7,17 @@ import { api } from "../utils/api";
 import { useRouter } from "next/router";
 
 const PickupOrders: NextPage = () => {
+  const getDeliveries = api.order.getAllOrders.useQuery();
   const { data: session } = useSession();
   const router = useRouter();
-  const driveOrder = api.order.driveForOrder.useMutation();
+  const driveOrder = api.order.driveForOrder.useMutation({
+    onSuccess: () => {
+      getDeliveries.refetch();
+    },
+  });
   const getSpecificUser = api.auth.getSpecificUser.useQuery(
     session?.user.id || " "
   );
-  const getDeliveries = api.order.getAllOrders.useQuery();
-
-  useEffect(() => {
-    getDeliveries.refetch();
-  }, [driveOrder.isLoading]);
 
   const handleClick = (id: string) => {
     driveOrder.mutate({ orderId: id, userId: session?.user.id || " " });
@@ -67,11 +67,7 @@ const PickupOrders: NextPage = () => {
                   })}
                 </Stack>
               </h2>
-              {data.Driver === null &&
-              !driveOrder.isLoading &&
-              !getDeliveries.isLoading &&
-              getDeliveries.isSuccess &&
-              data.userId !== session?.user.id ? (
+              {data.Driver === null && data.userId !== session?.user.id ? (
                 <Button
                   onClick={() => {
                     handleClick(data.id || " ");
