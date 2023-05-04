@@ -6,6 +6,7 @@ import getDistance from "../../components/distance";
 import Map from "../../components/map";
 import Navbar from "../../components/navbar";
 import { api } from "../utils/api";
+const uuid = require("uuid");
 
 const Home: NextPage = () => {
   const { data: session, status: isLoading } = useSession();
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
                   <h2>
                     Items:{" "}
                     <Stack flexDirection="row" gap="10px">
-                      {data.items.map((item, index) => {
+                      {data.items.split(",").map((item, index) => {
                         return <h2 key={index}>{item}</h2>;
                       })}
                     </Stack>
@@ -136,8 +137,8 @@ const Home: NextPage = () => {
                   <h2>
                     Items:{" "}
                     <Stack flexDirection="row" gap="10px">
-                      {data.items.map((item, index) => {
-                        return <h2 key={index}>{item}</h2>;
+                      {data.items.split(",").map((item, index) => {
+                        return <h2 key={data.id + index}>{item}</h2>;
                       })}
                     </Stack>
                   </h2>

@@ -98,10 +98,14 @@ const CreateOrder: NextPage = () => {
               pickupLongitude: pickupLongitude,
               userId: session?.user.id || " ",
             };
+            let updatedItems = "";
+            for (let x of formValues.items) {
+              updatedItems += x + ",";
+            }
 
-            console.log(formValues);
+            let updatedFormValues = { ...formValues, items: updatedItems };
 
-            uploadOrder.mutate({ ...formValues });
+            uploadOrder.mutate({ ...updatedFormValues });
           }}
         >
           {({

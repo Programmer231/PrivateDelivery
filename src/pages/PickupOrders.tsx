@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import Navbar from "../../components/navbar";
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
+const uuidv4 = require("uuid");
 
 const PickupOrders: NextPage = () => {
   const getDeliveries = api.order.getAllOrders.useQuery();
@@ -20,6 +21,7 @@ const PickupOrders: NextPage = () => {
   );
 
   const handleClick = (id: string) => {
+    console.log(document.cookie);
     driveOrder.mutate({ orderId: id, userId: session?.user.id || " " });
   };
 
@@ -62,8 +64,8 @@ const PickupOrders: NextPage = () => {
               <h2>
                 Items:{" "}
                 <Stack flexDirection="row" gap="10px">
-                  {data.items.map((item, index) => {
-                    return <h2 key={"index"}>{item}</h2>;
+                  {data.items.split(",").map((item, index) => {
+                    return <h2 key={data.id + index}>{item}</h2>;
                   })}
                 </Stack>
               </h2>

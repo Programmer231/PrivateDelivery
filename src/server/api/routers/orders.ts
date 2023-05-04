@@ -13,7 +13,7 @@ export const orderRouter = createTRPCRouter({
     .input(
       z.object({
         personalAddress: z.string(),
-        items: z.array(z.string()),
+        items: z.string(),
         personalLatitude: z.number(),
         personalLongitude: z.number(),
         pickupLatitude: z.number(),

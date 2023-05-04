@@ -5,19 +5,20 @@ generator client {
     provider = "prisma-client-js"
 }
 
-datasource db {
-    provider = "postgres"
+datasource private_delivery {
+    provider = "mysql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
+    id                String  @id @default(cuid()) 
+    userId            String  @unique
     type              String
     provider          String
     providerAccountId String
@@ -34,9 +35,9 @@ model Account {
 }
 
 model Session {
-    id           String   @id @default(cuid())
+    id           String   @id @default(cuid()) @unique
     sessionToken String   @unique
-    userId       String
+    userId       String   @unique
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     status       String?
@@ -45,20 +46,20 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String? @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    order         DeliveryOrder[] @relation(name: "UserTracker", map: "User_fkey")
-    driver        DeliveryOrder[] @relation(name: "DriverTracker", map: "Driver_fkey")
+    order         DeliveryOrder[] @relation(name: "UserTracker")
+    driver        DeliveryOrder[] @relation(name: "DriverTracker")
     status        String?
 }
 
 model DeliveryOrder {
     price         Float
     personalAddress       String
-    items         String[]
+    items                 String
     personalLatitude      Float
     personalLongitude     Float
     pickupLatitude      Float
@@ -67,9 +68,9 @@ model DeliveryOrder {
     timeframe     String
     id            String    @id @default(cuid())
     User          User? @relation(name: "UserTracker", fields: [userId], references: [id], onDelete: Cascade)
-    userId        String?
+    userId        String? @map("user_id")
     Driver        User? @relation(name: "DriverTracker", fields: [driverId], references: [id], onDelete: Cascade)
-    driverId      String?
+    driverId      String? @map("driver_id")
 }
 
 model VerificationToken {
