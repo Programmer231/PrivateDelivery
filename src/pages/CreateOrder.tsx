@@ -105,6 +105,8 @@ const CreateOrder: NextPage = () => {
 
             let updatedFormValues = { ...formValues, items: updatedItems };
 
+            console.log(updatedFormValues);
+
             uploadOrder.mutate({ ...updatedFormValues });
           }}
         >
