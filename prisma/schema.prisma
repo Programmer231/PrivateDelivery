@@ -18,16 +18,16 @@ datasource db {
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid()) @db.VarChar(500)
-    userId            String @db.Text
+    userId            String @db.VarChar(10000)
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
+    refresh_token     String? @db.VarChar(10000)
+    access_token      String? @db.VarChar(10000)
     expires_at        Int?
     token_type        String?
-    scope             String? @db.Text
-    id_token          String? @db.Text
+    scope             String? @db.VarChar(10000)
+    id_token          String? @db.VarChar(10000)
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -36,7 +36,7 @@ model Account {
 
 model Session {
     id           String   @id @default(cuid())
-    sessionToken String   @db.Text
+    sessionToken String   @db.VarChar(10000)
     userId       String   @unique
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
